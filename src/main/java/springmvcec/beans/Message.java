@@ -7,40 +7,34 @@ package springmvcec.beans;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author mohayas
  */
 @Entity
-@Table(name = "ticket")
+@Table(name = "message")
 @XmlRootElement
-@NamedQueries({ @NamedQuery(name = "Ticket.findAll", query = "SELECT t FROM Ticket t"),
-		@NamedQuery(name = "Ticket.findById", query = "SELECT t FROM Ticket t WHERE t.id = :id"),
-		@NamedQuery(name = "Ticket.findBySubject", query = "SELECT t FROM Ticket t WHERE t.subject = :subject"),
-		@NamedQuery(name = "Ticket.findByBody", query = "SELECT t FROM Ticket t WHERE t.body = :body"),
-		@NamedQuery(name = "Ticket.findByStatus", query = "SELECT t FROM Ticket t WHERE t.status = :status"),
-		@NamedQuery(name = "Ticket.findByCreatedAt", query = "SELECT t FROM Ticket t WHERE t.createdAt = :createdAt") })
-public class Ticket implements Serializable {
+@NamedQueries({ @NamedQuery(name = "Message.findAll", query = "SELECT m FROM Message m"),
+		@NamedQuery(name = "Message.findById", query = "SELECT m FROM Message m WHERE m.id = :id"),
+		@NamedQuery(name = "Message.findByCreatedAt", query = "SELECT m FROM Message m WHERE m.createdAt = :createdAt") })
+public class Message implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -49,36 +43,30 @@ public class Ticket implements Serializable {
 	@Column(name = "id")
 	private Integer id;
 	@Basic(optional = false)
-	@Column(name = "subject")
-	private String subject;
-	@Basic(optional = false)
+	@Lob
 	@Column(name = "body")
 	private String body;
-	@Basic(optional = false)
-	@Column(name = "status")
-	private String status;
 	@Basic(optional = false)
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
-	@JoinColumn(name = "owner", referencedColumnName = "id")
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	@ManyToOne(optional = false)
-	private User owner;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "ticket")
-	private List<Message> messageList;
+	private User user;
+	@JoinColumn(name = "ticket_id", referencedColumnName = "id")
+	@ManyToOne(optional = false)
+	private Ticket ticket;
 
-	public Ticket() {
+	public Message() {
 	}
 
-	public Ticket(Integer id) {
+	public Message(Integer id) {
 		this.id = id;
 	}
 
-	public Ticket(Integer id, String subject, String body, String status, Date createdAt) {
+	public Message(Integer id, String body, Date createdAt) {
 		this.id = id;
-		this.subject = subject;
 		this.body = body;
-		this.status = status;
 		this.createdAt = createdAt;
 	}
 
@@ -90,28 +78,12 @@ public class Ticket implements Serializable {
 		this.id = id;
 	}
 
-	public String getSubject() {
-		return subject;
-	}
-
-	public void setSubject(String subject) {
-		this.subject = subject;
-	}
-
 	public String getBody() {
 		return body;
 	}
 
 	public void setBody(String body) {
 		this.body = body;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 	public Date getCreatedAt() {
@@ -122,21 +94,20 @@ public class Ticket implements Serializable {
 		this.createdAt = createdAt;
 	}
 
-	public User getOwner() {
-		return owner;
+	public User getUserId() {
+		return user;
 	}
 
-	public void setOwner(User owner) {
-		this.owner = owner;
+	public void setUserId(User userId) {
+		this.user = userId;
 	}
 
-	@XmlTransient
-	public List<Message> getMessageList() {
-		return messageList;
+	public Ticket getTicketId() {
+		return ticket;
 	}
 
-	public void setMessageList(List<Message> messageList) {
-		this.messageList = messageList;
+	public void setTicketId(Ticket ticketId) {
+		this.ticket = ticketId;
 	}
 
 	@Override
@@ -149,10 +120,10 @@ public class Ticket implements Serializable {
 	@Override
 	public boolean equals(Object object) {
 		// TODO: Warning - this method won't work in the case the id fields are not set
-		if (!(object instanceof Ticket)) {
+		if (!(object instanceof Message)) {
 			return false;
 		}
-		Ticket other = (Ticket) object;
+		Message other = (Message) object;
 		if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
 			return false;
 		}
@@ -161,7 +132,7 @@ public class Ticket implements Serializable {
 
 	@Override
 	public String toString() {
-		return "beans.Ticket[ id=" + id + " ]";
+		return "springmvcec.beans.Message[ id=" + id + " ]";
 	}
 
 }

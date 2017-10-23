@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package springmvcec.beans;
 
 import java.io.Serializable;
@@ -10,11 +15,29 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-@Entity(name = "user")
+/**
+ *
+ * @author mohayas
+ */
+@Entity
+@Table(name = "user")
+@XmlRootElement
+@NamedQueries({ @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+		@NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
+		@NamedQuery(name = "User.findByFirstname", query = "SELECT u FROM User u WHERE u.firstname = :firstname"),
+		@NamedQuery(name = "User.findByLastname", query = "SELECT u FROM User u WHERE u.lastname = :lastname"),
+		@NamedQuery(name = "User.findByType", query = "SELECT u FROM User u WHERE u.type = :type") })
 public class User implements Serializable {
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	private List<Message> messageList;
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -112,6 +135,15 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return "beans.User[ id=" + id + " ]";
+	}
+
+	@XmlTransient
+	public List<Message> getMessageList() {
+		return messageList;
+	}
+
+	public void setMessageList(List<Message> messageList) {
+		this.messageList = messageList;
 	}
 
 }

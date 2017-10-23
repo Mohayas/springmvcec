@@ -33,8 +33,8 @@ public class TicketService {
 		return ticket;
 	}
 
-	public void saveTicket(Ticket ticket) {
+	public void saveOrUpadteTicket(Ticket ticket) {
 		ticketRepository.save(ticket);
-
 	}
+
 }

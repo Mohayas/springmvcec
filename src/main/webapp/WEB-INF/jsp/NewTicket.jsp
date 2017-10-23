@@ -50,11 +50,6 @@
 			<form class="form-horizontal" action="/ticket/add" method="post">
 				<fieldset>
 
-
-					<!-- change col-sm-N to reflect how you would like your column spacing (http://getbootstrap.com/css/#forms-control-sizes) -->
-
-
-					<!-- Form Name -->
 					<legend>New Ticket</legend>
 
 					<!-- Text input http://getbootstrap.com/css/#forms -->
@@ -86,8 +81,8 @@
 					</div>
 
 					<div class="form-group">
-						<label class="control-label col-sm-2" for="singlebutton">Single
-							Button</label>
+						<label class="control-label col-sm-2" for="singlebutton">
+							</label>
 						<div class="text-center col-sm-10">
 							<button type="submit" id="singlebutton" name="singlebutton"
 								class="btn btn-primary" aria-label="Single Button">Submit
