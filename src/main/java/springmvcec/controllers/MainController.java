@@ -110,4 +110,32 @@ public class MainController {
 
 	}
 
+	@RequestMapping(value = "/ticket/close/{id}", method = RequestMethod.GET)
+	public void closeTicket(@PathVariable int id, HttpServletResponse response) {
+
+		Ticket ticket = ticketService.findTicketById(id);
+		ticket.setStatus("Closed");
+		ticketService.saveOrUpadteTicket(ticket);
+		try {
+			response.sendRedirect("/tickets");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@RequestMapping(value = "/ticket/resolved/{id}", method = RequestMethod.GET)
+	public void setResolvedTicket(@PathVariable int id, HttpServletResponse response) {
+
+		Ticket ticket = ticketService.findTicketById(id);
+		ticket.setStatus("Resolved");
+		ticketService.saveOrUpadteTicket(ticket);
+		try {
+			response.sendRedirect("/tickets");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 }

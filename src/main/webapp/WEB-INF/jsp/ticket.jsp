@@ -19,28 +19,21 @@
 <link rel="stylesheet"
 	href="<c:url value="/static/css/bootstrap.min.css" />">
 
-<!-- Custom styles for this template -->
+
 
 </head>
 
 <body>
 
-	<nav
-		class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-	<button class="navbar-toggler navbar-toggler-right" type="button"
-		data-toggle="collapse" data-target="#navbarCollapse"
-		aria-controls="navbarCollapse" aria-expanded="false"
-		aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
+	<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">	
 	<a class="navbar-brand" href="/tickets">Tickets</a>
 	<div class="collapse navbar-collapse" id="navbarCollapse">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active"><a class="nav-link"
-				href="/ticket/new">New Ticket <span class="sr-only">(current)</span>
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-			<li class="nav-item"><a class="nav-link disabled" href="#">Disabled</a>
+		<ul class="navbar-nav mx-auto">
+			<li class="nav-item active text-center">
+			<a class="nav-link"
+				href="/ticket/new">New Ticket</a></li>
+			<li class="nav-item text-center"><a class="nav-link" href="#">Link</a></li>
+			<li class="nav-item text-center"><a class="nav-link disabled" href="#">Disabled</a>
 			</li>
 		</ul>
 		<form class="form-inline mt-2 mt-md-0">
@@ -51,72 +44,77 @@
 	</nav>
 
 	<div class="container">
-		<div class="jumbotron" style="disply:flex;align-content:center;justify-items:center;align-items:center;">
-
+		<div class="jumbotron"
+			style="disply: flex; align-content: center; justify-items: center; align-items: center;">
 			<br>
-
-
 			<div class="mx-auto col-md-8">
+				<h3>#${ ticket.id} ${ ticket.subject}</h3>
+				<hr class="my-4">
+			</div>
 
-
+			<div class="col-md-10">
+			<div style="float: right;">
+			<a class="btn btn-success" href="/ticket/resolved/${ticket.id}" role="button">Resolved</a>
+			<a class="btn btn-danger" href="/ticket/close/${ticket.id}" role="button"> Close  </a>
+			</div>
+			</div>
+					<br><br>
+				<div class="mx-auto col-md-8">
 				<div class="card">
 					<div class="card-header">
-					<span class="badge badge-primary">
-					${ticket.owner.firstname } ${ticket.owner.lastname }
-					</span>
-					<span class="badge badge-info" style="float: right;">
-					<fmt:formatDate value="${ticket.createdAt }"
-									var="formattedCreatedAt" type="date" pattern="hh:mm dd/MM/yyyy" />
-								${formattedCreatedAt}
-					</span>
+						<span class="badge badge-primary"> ${ticket.owner.firstname }
+							${ticket.owner.lastname } </span> <span class="badge badge-info"
+							style="float: right;"> <fmt:formatDate
+								value="${ticket.createdAt }" var="formattedCreatedAt"
+								type="date" pattern="hh:mm dd/MM/yyyy" /> ${formattedCreatedAt}
+						</span>
 					</div>
 					<div class="card-block">
-<!-- 						<h4 class="card-title">Special title treatment</h4> -->
-						<p class="card-text">${ticket.body }</p>
+						<!-- 						<h4 class="card-title">Special title treatment</h4> -->
+						<p class="card-text">${ ticket.body }</p>
 					</div>
 				</div>
-				
+
 				<c:forEach var="message" items="${ ticket.messageList }">
 					<br>
 					<div class="card">
-					<div class="card-header">
-					<span class="badge badge-primary">
-					${message.user.firstname } ${message.user.lastname }
-					</span>
-					<span class="badge badge-info" style="float: right;">
-					<fmt:formatDate value="${message.createdAt }"
-									var="formattedCreatedAt" type="date" pattern="hh:mm dd/MM/yyyy" />
+						<div class="card-header">
+							<span class="badge badge-primary">
+								${message.user.firstname } ${message.user.lastname } </span> <span
+								class="badge badge-info" style="float: right;"> <fmt:formatDate
+									value="${message.createdAt }" var="formattedCreatedAt"
+									type="date" pattern="hh:mm dd/MM/yyyy" />
 								${formattedCreatedAt}
-					</span>
+							</span>
+						</div>
+						<div class="card-block">
+							<!-- 						<h4 class="card-title">Special title treatment</h4> -->
+							<p class="card-text">${message.body }</p>
+						</div>
 					</div>
-					<div class="card-block">
-<!-- 						<h4 class="card-title">Special title treatment</h4> -->
-						<p class="card-text">${message.body }</p>
-					</div>
-				</div>
-				
+
 				</c:forEach>
 
 
 			</div>
 
 			<br>
-			
-			<div class="mx-auto col-md-8" >
-			<hr class="my-4">
-			
-				<form class="form-horizontal" action="/ticket/reply" method="post" >
+
+			<div class="mx-auto col-md-8">
+				<hr class="my-4">
+
+				<form class="form-horizontal" action="/ticket/reply" method="post">
 					<fieldset>
 
-								<textarea class="form-control col-md-12" id="textarea" name="reply"
-									rows="6"></textarea>
-								<input type="hidden" name="ticketId" value="${ ticket.id }">
-								<br>
-								<div class="mx-auto col-md-8">
-								<button type="submit" id="singlebutton" name="singlebutton"
-									class="btn btn-primary  btn-block" aria-label="Single Button">Reply</button>
+						<textarea class="form-control col-md-12" id="textarea"
+							name="reply" rows="6"></textarea>
+						<input type="hidden" name="ticketId" value="${ ticket.id }">
+						<br>
+						<div class="mx-auto col-md-8">
+							<button type="submit" id="singlebutton" name="singlebutton"
+								class="btn btn-primary  btn-block" aria-label="Single Button">Reply</button>
 
-							</div>
+						</div>
 
 
 					</fieldset>
@@ -136,6 +134,7 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
 		integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
 		crossorigin="anonymous"></script>
+
 
 
 	<!-- 	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" -->

@@ -10,6 +10,14 @@
 <link rel="stylesheet" href="<c:url value="/static/css/index.css" />">
 <link rel="stylesheet"
 	href="<c:url value="/static/css/bootstrap.min.css" />">
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
+<!-- 	<link rel="stylesheet" -->
+<%-- 	href="<c:url value="/static/css/bootstrap-datatable.css" />"> --%>
+	
+<!-- 	<link rel="stylesheet" -->
+<!-- 	href="https://cdn.datatables.net/responsive/2.2.0/css/responsive.bootstrap4.min.css" /> -->
+
 
 <!-- Custom styles for this template -->
 
@@ -44,25 +52,26 @@
 
 	<div class="container">
 		<div class="jumbotron">
-			<h1>Tickets</h1>
+			<h1>All Tickets</h1>
+			<hr class="my-4">
 			<br>
-			<table class="table table-bordered table-hover">
-				<thead>
-					<tr scope="row">
-						<td>#Id</td>
-						<td>Created By</td>
-						<td>Subject</td>
-						<td>Created At</td>
-						<td>Status</td>
+			<table id="ticketsTable" class="table table-bordered table-hover table-dark table-striped">
+				<thead class="class="thead-dark"">
+					<tr>
+						<td scope="col">Id</td>
+						<td scope="col">Created By</td>
+						<td scope="col">Subject</td>
+						<td scope="col">Created At</td>
+						<td scope="col">Status</td>
 
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="ticket" items="${ tickets }">
 
-						<tr scope="row">
+						<tr>
 
-							<td>${ticket.id }</td>
+							<td>#${ticket.id }</td>
 							<td>${ticket.owner.firstname } ${ticket.owner.lastname }</td>
 							<td><a href="/ticket/${ ticket.id }">${ticket.subject }</a></td>
 							<td><fmt:formatDate value="${ticket.createdAt }"
@@ -82,6 +91,23 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
 		integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
 		crossorigin="anonymous"></script>
-	<script src="<c:url value="/static/js/bootstrap.min.js "/>"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+		integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+		integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+		crossorigin="anonymous"></script>
+
+	<script
+		src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js">
+		
+	</script>
+	<script>
+		$(document).ready(function() {
+			$('#ticketsTable').DataTable();
+		});
+	</script>
 </body>
 </html>
