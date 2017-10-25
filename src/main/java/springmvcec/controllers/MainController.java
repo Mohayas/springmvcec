@@ -99,7 +99,7 @@ public class MainController {
 		message.setBody(reply);
 		message.setCreatedAt(new Date());
 		message.setTicketId(ticket);
-		message.setUserId(user);
+		message.setUser(user);
 		messageService.saveMessage(message);
 		System.out.println("IN  /ticket/reply");
 		try {

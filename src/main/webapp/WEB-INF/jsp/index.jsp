@@ -46,9 +46,9 @@
 		<div class="jumbotron">
 			<h1>Tickets</h1>
 			<br>
-			<table class="table table-striped table-bordered">
+			<table class="table table-bordered table-hover">
 				<thead>
-					<tr>
+					<tr scope="row">
 						<td>#Id</td>
 						<td>Created By</td>
 						<td>Subject</td>
@@ -60,12 +60,11 @@
 				<tbody>
 					<c:forEach var="ticket" items="${ tickets }">
 
-						<tr>
+						<tr scope="row">
 
 							<td>${ticket.id }</td>
-							<td>${ticket.owner.firstname }${ticket.owner.lastname }</td>
-							<td><a href="/ticket/${ ticket.id }">${ticket.subject }</a>
-							</td>
+							<td>${ticket.owner.firstname } ${ticket.owner.lastname }</td>
+							<td><a href="/ticket/${ ticket.id }">${ticket.subject }</a></td>
 							<td><fmt:formatDate value="${ticket.createdAt }"
 									var="formattedCreatedAt" type="date" pattern="hh:mm dd/MM/yyyy" />
 								${formattedCreatedAt}</td>
