@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import springmvcec.beans.Action;
 import springmvcec.beans.Message;
 import springmvcec.beans.Ticket;
 import springmvcec.beans.User;
+import springmvcec.services.ActionService;
 import springmvcec.services.MessageService;
 import springmvcec.services.TicketService;
 import springmvcec.services.UserService;
@@ -30,6 +32,8 @@ public class MainController {
 	UserService userService;
 	@Autowired
 	MessageService messageService;
+	@Autowired
+	ActionService actionService;
 
 	@RequestMapping(value = "/hello")
 	public String Hi() {
@@ -56,6 +60,14 @@ public class MainController {
 		Ticket ticket = ticketService.findTicketById(id);
 		ticket.setStatus("Seen");
 		ticketService.saveOrUpadteTicket(ticket);
+
+		Action action = new Action();
+		action.setTicket(ticket);
+		action.setUser(ticket.getOwner());
+		action.setDoneAt(new Date());
+		action.setType("Seen");
+		actionService.saveAction(action);
+
 		request.setAttribute("ticket", ticket);
 
 		return "ticket";
@@ -116,6 +128,14 @@ public class MainController {
 		Ticket ticket = ticketService.findTicketById(id);
 		ticket.setStatus("Closed");
 		ticketService.saveOrUpadteTicket(ticket);
+
+		Action action = new Action();
+		action.setTicket(ticket);
+		action.setUser(ticket.getOwner());
+		action.setDoneAt(new Date());
+		action.setType("Closed");
+		actionService.saveAction(action);
+
 		try {
 			response.sendRedirect("/tickets");
 		} catch (IOException e) {
@@ -130,6 +150,14 @@ public class MainController {
 		Ticket ticket = ticketService.findTicketById(id);
 		ticket.setStatus("Resolved");
 		ticketService.saveOrUpadteTicket(ticket);
+
+		Action action = new Action();
+		action.setTicket(ticket);
+		action.setUser(ticket.getOwner());
+		action.setDoneAt(new Date());
+		action.setType("Resolved");
+		actionService.saveAction(action);
+
 		try {
 			response.sendRedirect("/tickets");
 		} catch (IOException e) {

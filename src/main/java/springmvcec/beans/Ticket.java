@@ -66,6 +66,8 @@ public class Ticket implements Serializable {
 	private User owner;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "ticket")
 	private List<Message> messageList;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "ticket")
+	private List<Action> actionList;
 
 	public Ticket() {
 	}
@@ -137,6 +139,15 @@ public class Ticket implements Serializable {
 
 	public void setMessageList(List<Message> messageList) {
 		this.messageList = messageList;
+	}
+
+	@XmlTransient
+	public List<Action> getActionList() {
+		return actionList;
+	}
+
+	public void setActionList(List<Action> actionList) {
+		this.actionList = actionList;
 	}
 
 	@Override

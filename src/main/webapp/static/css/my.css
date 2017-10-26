@@ -1,0 +1,17 @@
+/* Show it is fixed to the top */
+body {
+	min-height: 75rem;
+	padding-top: 4.5rem;
+}
+
+#actiosHistoryTable {
+	border: 1px solid rgba(0, 0, 0, .125);
+	border-radius: .25rem;
+	background-color: #f7f7f9;
+}
+
+#actiosHistoryTable td {
+	font-size: 14px;
+	border: 1px solid rgba(0, 0, 0, .125);
+	padding-top: 0px;
+}

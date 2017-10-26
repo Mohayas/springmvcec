@@ -9,15 +9,15 @@
 <title>Ticket | Details</title>
 <!-- <link href="static/css/bootstrap.min.css" rel="stylesheet"> -->
 <!-- <link href="static/css/index.css" rel="stylesheet"> -->
-<%-- <link rel="stylesheet" href="<c:url value="/static/css/index.css" />"> --%>
+<link rel="stylesheet" href="<c:url value="/static/css/my.css" />">
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
 	integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
 	crossorigin="anonymous">
 
-<link rel="stylesheet"
-	href="<c:url value="/static/css/bootstrap.min.css" />">
+<!-- <link rel="stylesheet" -->
+<%-- 	href="<c:url value="/static/css/bootstrap.min.css" />"> --%>
 
 
 
@@ -47,26 +47,50 @@
 		<div class="jumbotron"
 			style="disply: flex; align-content: center; justify-items: center; align-items: center;">
 			<br>
+			<fmt:formatDate value="${ticket.createdAt }" var="formattedCreatedAt"
+								type="date" pattern="hh:mm dd/MM/yyyy" />
 			<div class="mx-auto col-md-8">
 				<h3>#${ ticket.id} ${ ticket.subject}</h3>
 				<hr class="my-4">
 			</div>
-
+			
 			<div class="col-md-10">
 			<div style="float: right;">
 			<a class="btn btn-success" href="/ticket/resolved/${ticket.id}" role="button">Resolved</a>
 			<a class="btn btn-danger" href="/ticket/close/${ticket.id}" role="button"> Close  </a>
 			</div>
 			</div>
+			
+			<div class="mx-auto col-md-8">
+			<br>
+				<table id="actiosHistoryTable" class="mx-auto col-md-12">
+				<tr><td>Created  </td><td>by <b> ${ticket.owner.firstname } ${ticket.owner.firstname }</b> at ${formattedCreatedAt}</td> </tr>
+				<tr><td>Status</td><td>${ticket.status}</td> </tr>
+				<tr><td>History</td>
+				<td>
+					<c:forEach items="${ticket.actionList}" var="action">
+					
+					<fmt:formatDate value="${action.doneAt }" var="formattedActiondAt"
+								type="date" pattern="hh:mm dd/MM/yyyy" />
+								
+					${action.type} by ${action.user.firstname} ${action.user.lastname} at ${formattedActiondAt}
+					<br>  
+					</c:forEach>
+					
+				</td>
+				
+				
+				</tr>
+				</table>
+			</div>
+			
 					<br><br>
 				<div class="mx-auto col-md-8">
 				<div class="card">
 					<div class="card-header">
 						<span class="badge badge-primary"> ${ticket.owner.firstname }
 							${ticket.owner.lastname } </span> <span class="badge badge-info"
-							style="float: right;"> <fmt:formatDate
-								value="${ticket.createdAt }" var="formattedCreatedAt"
-								type="date" pattern="hh:mm dd/MM/yyyy" /> ${formattedCreatedAt}
+							style="float: right;"> ${formattedCreatedAt}
 						</span>
 					</div>
 					<div class="card-block">

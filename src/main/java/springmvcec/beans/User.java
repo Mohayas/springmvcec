@@ -56,6 +56,8 @@ public class User implements Serializable {
 	private int type;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
 	private List<Ticket> ticketList;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "ticket")
+	private List<Action> actionList;
 
 	public User() {
 	}
@@ -112,6 +114,29 @@ public class User implements Serializable {
 		this.ticketList = ticketList;
 	}
 
+	@XmlTransient
+	public List<Action> getActionList() {
+		return actionList;
+	}
+
+	public void setActionList(List<Action> actionList) {
+		this.actionList = actionList;
+	}
+
+	@Override
+	public String toString() {
+		return "beans.User[ id=" + id + " ]";
+	}
+
+	@XmlTransient
+	public List<Message> getMessageList() {
+		return messageList;
+	}
+
+	public void setMessageList(List<Message> messageList) {
+		this.messageList = messageList;
+	}
+
 	@Override
 	public int hashCode() {
 		int hash = 0;
@@ -130,20 +155,6 @@ public class User implements Serializable {
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "beans.User[ id=" + id + " ]";
-	}
-
-	@XmlTransient
-	public List<Message> getMessageList() {
-		return messageList;
-	}
-
-	public void setMessageList(List<Message> messageList) {
-		this.messageList = messageList;
 	}
 
 }
