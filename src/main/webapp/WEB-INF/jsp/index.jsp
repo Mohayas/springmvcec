@@ -7,41 +7,29 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>All Tickets</title>
-<link rel="stylesheet" href="<c:url value="/static/css/index.css" />">
+
 <link rel="stylesheet"
 	href="<c:url value="/static/css/bootstrap.min.css" />">
 <link rel="stylesheet"
 	href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
-<!-- 	<link rel="stylesheet" -->
-<%-- 	href="<c:url value="/static/css/bootstrap-datatable.css" />"> --%>
-	
-<!-- 	<link rel="stylesheet" -->
-<!-- 	href="https://cdn.datatables.net/responsive/2.2.0/css/responsive.bootstrap4.min.css" /> -->
 
-
-<!-- Custom styles for this template -->
+<link rel="stylesheet" href="<c:url value="/static/css/my.css" />">
 
 </head>
 
 <body>
 
-	<nav
-		class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-	<button class="navbar-toggler navbar-toggler-right" type="button"
-		data-toggle="collapse" data-target="#navbarCollapse"
-		aria-controls="navbarCollapse" aria-expanded="false"
-		aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<a class="navbar-brand" href="/tickets">Tickets</a>
+	<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
 	<div class="collapse navbar-collapse" id="navbarCollapse">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active"><a class="nav-link"
-				href="/ticket/new">New Ticket <span class="sr-only">(current)</span>
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-			<li class="nav-item"><a class="nav-link disabled" href="#">Disabled</a>
+		
+		<ul class="navbar-nav mx-auto">
+			<li class="nav-item active text-center">
+			<a class="nav-link" href="/tickets">All Tickets</a>
 			</li>
+			<li class="nav-item text-center">
+			<a class="nav-link" href="/ticket/new">New Ticket</a></li>
+			<li class="nav-item text-center"><a class="nav-link" href="#">Statistics</a></li>
+			
 		</ul>
 		<form class="form-inline mt-2 mt-md-0">
 			<input class="form-control mr-sm-2" type="text" placeholder="Search">
@@ -53,16 +41,16 @@
 	<div class="container">
 		<div class="jumbotron">
 			<h1>All Tickets</h1>
-			<hr class="my-4">
-			<br>
-			<table id="ticketsTable" class="table table-bordered table-hover table-dark table-striped">
-				<thead class="class="thead-dark"">
-					<tr>
-						<td scope="col">Id</td>
-						<td scope="col">Created By</td>
-						<td scope="col">Subject</td>
-						<td scope="col">Created At</td>
-						<td scope="col">Status</td>
+			<hr class="my-4">			
+			<table id="ticketsTable"
+				class="table table-bordered table-hover table-dark table-striped" style="border: 1px solid #babdb6;">
+				<thead class="thead-dark">
+					<tr style="background-color: #f7f7f9; border: 1px solid #babdb6; " >
+						<th scope="col" style="border: 1px solid #babdb6; " >Id</th>
+						<th scope="col" style="border: 1px solid #babdb6; " >Created By</th>
+						<th scope="col" style="border: 1px solid #babdb6; " >Subject</th>
+						<th scope="col" style="border: 1px solid #babdb6; " >Created At</th>
+						<th scope="col" style="border: 1px solid #babdb6; " >Status</th>
 
 					</tr>
 				</thead>
@@ -71,13 +59,13 @@
 
 						<tr>
 
-							<td>#${ticket.id }</td>
-							<td>${ticket.owner.firstname } ${ticket.owner.lastname }</td>
-							<td><a href="/ticket/${ ticket.id }">${ticket.subject }</a></td>
-							<td><fmt:formatDate value="${ticket.createdAt }"
-									var="formattedCreatedAt" type="date" pattern="hh:mm dd/MM/yyyy" />
+							<td style="border: 1px solid #babdb6;">#${ticket.id }</td>
+							<td style="border: 1px solid #babdb6;">${ticket.owner.firstname }&nbsp;${ticket.owner.lastname }</td>
+							<td style="border: 1px solid #babdb6;"><a href="/ticket/${ ticket.id }">${ticket.subject }</a></td>
+							<td style="border: 1px solid #babdb6;"><fmt:formatDate value="${ticket.createdAt }"
+									var="formattedCreatedAt" type="date" pattern="hh:mm:ss dd/MM/yyyy" />
 								${formattedCreatedAt}</td>
-							<td>${ticket.status }</td>
+							<td style="border: 1px solid #babdb6;">${ticket.status }</td>
 
 						</tr>
 

@@ -18,23 +18,16 @@
 
 <body>
 
-	<nav
-		class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-	<button class="navbar-toggler navbar-toggler-right" type="button"
-		data-toggle="collapse" data-target="#navbarCollapse"
-		aria-controls="navbarCollapse" aria-expanded="false"
-		aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<a class="navbar-brand" href="/tickets">Tickets</a>
+	<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
 	<div class="collapse navbar-collapse" id="navbarCollapse">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active"><a class="nav-link"
-				href="/ticket/new">New Ticket <span class="sr-only">(current)</span>
-			</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-			<li class="nav-item"><a class="nav-link disabled" href="#">Disabled</a>
-			</li>
+
+		<ul class="navbar-nav mx-auto">
+			<li class="nav-item active text-center"><a class="nav-link"
+				href="/tickets">All Tickets</a></li>
+			<li class="nav-item text-center"><a class="nav-link"
+				href="/ticket/new">New Ticket</a></li>
+			<li class="nav-item text-center"><a class="nav-link" href="#">Statistics</a></li>
+
 		</ul>
 		<form class="form-inline mt-2 mt-md-0">
 			<input class="form-control mr-sm-2" type="text" placeholder="Search">
@@ -42,6 +35,7 @@
 		</form>
 	</div>
 	</nav>
+
 	<div class="container">
 		<div class="jumbotron">
 
@@ -82,7 +76,7 @@
 
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="singlebutton">
-							</label>
+						</label>
 						<div class="text-center col-sm-10">
 							<button type="submit" id="singlebutton" name="singlebutton"
 								class="btn btn-primary" aria-label="Single Button">Submit

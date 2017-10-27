@@ -61,6 +61,12 @@ public class Ticket implements Serializable {
 	@Column(name = "created_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdAt;
+	@Basic(optional = false)
+	@Column(name = "is_closed")
+	private boolean closed;
+	@Basic(optional = false)
+	@Column(name = "is_resolved")
+	private boolean resolved;
 	@JoinColumn(name = "owner", referencedColumnName = "id")
 	@ManyToOne(optional = false)
 	private User owner;
@@ -130,6 +136,22 @@ public class Ticket implements Serializable {
 
 	public void setOwner(User owner) {
 		this.owner = owner;
+	}
+
+	public boolean isClosed() {
+		return closed;
+	}
+
+	public void setClosed(boolean closed) {
+		this.closed = closed;
+	}
+
+	public boolean isResolved() {
+		return resolved;
+	}
+
+	public void setResolved(boolean resolved) {
+		this.resolved = resolved;
 	}
 
 	@XmlTransient

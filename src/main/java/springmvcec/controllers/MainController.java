@@ -36,9 +36,9 @@ public class MainController {
 	ActionService actionService;
 
 	@RequestMapping(value = "/hello")
-	public String Hi() {
+	public String signin() {
 
-		return "index";
+		return "signin";
 	}
 
 	@RequestMapping(value = "/tickets")
@@ -58,8 +58,6 @@ public class MainController {
 	public String getTicket(@PathVariable int id, HttpServletRequest request) {
 
 		Ticket ticket = ticketService.findTicketById(id);
-		ticket.setStatus("Seen");
-		ticketService.saveOrUpadteTicket(ticket);
 
 		Action action = new Action();
 		action.setTicket(ticket);
@@ -87,7 +85,9 @@ public class MainController {
 		ticket.setOwner(userService.findUser(userId));
 		ticket.setSubject(subject);
 		ticket.setBody(body);
-		ticket.setStatus("unseen");
+		ticket.setStatus("Open");
+		ticket.setClosed(false);
+		ticket.setResolved(false);
 		ticket.setCreatedAt(new Date());
 
 		ticketService.saveOrUpadteTicket(ticket);
@@ -123,41 +123,45 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "/ticket/close/{id}", method = RequestMethod.GET)
-	public void closeTicket(@PathVariable int id, HttpServletResponse response) {
+	public String closeTicket(@PathVariable int id, HttpServletRequest request) {
 
 		Ticket ticket = ticketService.findTicketById(id);
-		ticket.setStatus("Closed");
-		ticketService.saveOrUpadteTicket(ticket);
 
-		Action action = new Action();
-		action.setTicket(ticket);
-		action.setUser(ticket.getOwner());
-		action.setDoneAt(new Date());
-		action.setType("Closed");
-		actionService.saveAction(action);
+		if (!ticket.isClosed()) {
 
-		try {
-			response.sendRedirect("/tickets");
-		} catch (IOException e) {
-			e.printStackTrace();
+			ticket.setStatus("Closed");
+			ticket.setClosed(true);
+			ticketService.saveOrUpadteTicket(ticket);
+
+			Action action = new Action();
+			action.setTicket(ticket);
+			action.setUser(ticket.getOwner());
+			action.setDoneAt(new Date());
+			action.setType("Closed");
+			actionService.saveAction(action);
+
+			request.setAttribute("tickets", ticketService.getAllTickets());
 		}
-
+		return "index";
 	}
 
 	@RequestMapping(value = "/ticket/resolved/{id}", method = RequestMethod.GET)
 	public void setResolvedTicket(@PathVariable int id, HttpServletResponse response) {
 
 		Ticket ticket = ticketService.findTicketById(id);
-		ticket.setStatus("Resolved");
-		ticketService.saveOrUpadteTicket(ticket);
+		if (!ticket.isResolved()) {
 
-		Action action = new Action();
-		action.setTicket(ticket);
-		action.setUser(ticket.getOwner());
-		action.setDoneAt(new Date());
-		action.setType("Resolved");
-		actionService.saveAction(action);
+			ticket.setStatus("Resolved");
+			ticket.setResolved(true);
+			ticketService.saveOrUpadteTicket(ticket);
 
+			Action action = new Action();
+			action.setTicket(ticket);
+			action.setUser(ticket.getOwner());
+			action.setDoneAt(new Date());
+			action.setType("Resolved");
+			actionService.saveAction(action);
+		}
 		try {
 			response.sendRedirect("/tickets");
 		} catch (IOException e) {

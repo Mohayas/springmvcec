@@ -54,6 +54,12 @@ public class User implements Serializable {
 	@Basic(optional = false)
 	@Column(name = "type")
 	private int type;
+	@Basic(optional = false)
+	@Column(name = "username")
+	private String username;
+	@Basic(optional = false)
+	@Column(name = "password")
+	private String password;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
 	private List<Ticket> ticketList;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "ticket")
@@ -103,6 +109,22 @@ public class User implements Serializable {
 
 	public void setType(int type) {
 		this.type = type;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	@XmlTransient
