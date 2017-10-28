@@ -3,6 +3,8 @@ package springmvcec.controllers;
 import java.io.IOException;
 import java.util.Date;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -35,10 +37,37 @@ public class MainController {
 	@Autowired
 	ActionService actionService;
 
-	@RequestMapping(value = "/hello")
+	@RequestMapping(value = "/")
 	public String signin() {
 
 		return "signin";
+	}
+
+	@RequestMapping(value = "/doSignin", method = RequestMethod.POST)
+	public void diSignin(@RequestParam String username, @RequestParam String password, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		HttpSession session = request.getSession(true);
+		User user = userService.findUserByUsernameAndPassword(username, password);
+		System.out.println(user);
+		if (user != null) {
+			session.setAttribute("user", user);
+			try {
+				response.sendRedirect("/tickets");
+				return;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
+		request.setAttribute("signinError", "Try again");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/");
+		try {
+			dispatcher.forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	@RequestMapping(value = "/tickets")

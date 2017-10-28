@@ -11,16 +11,21 @@ import springmvcec.dao.UserJPARepository;
 @Transactional
 public class UserService {
 
-	private final UserJPARepository jpaRepository;
+	private final UserJPARepository userJPARepository;
 
 	public UserService(UserJPARepository jpaRepository) {
 
-		this.jpaRepository = jpaRepository;
+		this.userJPARepository = jpaRepository;
 	}
 
 	public User findUser(int id) {
 
-		return jpaRepository.findOne(id);
+		return userJPARepository.findOne(id);
+	}
+
+	public User findUserByUsernameAndPassword(String username, String password) {
+
+		return userJPARepository.findByUsernameAndPassword(username, password);
 	}
 
 }

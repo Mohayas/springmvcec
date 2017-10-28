@@ -88,7 +88,7 @@
 			<br> <br>
 			<div class="mx-auto col-md-8">
 
-				<table id="actiosHistoryTable" class="mx-auto col-md-12">
+				<table id="actiosHistoryTable" class="mx-auto col-md-12" cellpadding="5">
 					<tr>
 						<td>Created</td>
 						<td>by <b> ${ticket.owner.firstname }
