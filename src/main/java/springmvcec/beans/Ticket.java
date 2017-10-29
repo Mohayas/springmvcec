@@ -18,8 +18,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -34,12 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "ticket")
 @XmlRootElement
-@NamedQueries({ @NamedQuery(name = "Ticket.findAll", query = "SELECT t FROM Ticket t"),
-		@NamedQuery(name = "Ticket.findById", query = "SELECT t FROM Ticket t WHERE t.id = :id"),
-		@NamedQuery(name = "Ticket.findBySubject", query = "SELECT t FROM Ticket t WHERE t.subject = :subject"),
-		@NamedQuery(name = "Ticket.findByBody", query = "SELECT t FROM Ticket t WHERE t.body = :body"),
-		@NamedQuery(name = "Ticket.findByStatus", query = "SELECT t FROM Ticket t WHERE t.status = :status"),
-		@NamedQuery(name = "Ticket.findByCreatedAt", query = "SELECT t FROM Ticket t WHERE t.createdAt = :createdAt") })
+
 public class Ticket implements Serializable {
 
 	private static final long serialVersionUID = 1L;

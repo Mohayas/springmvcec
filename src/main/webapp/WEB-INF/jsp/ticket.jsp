@@ -21,7 +21,6 @@
 
 
 
-
 </head>
 
 <body>
@@ -33,8 +32,8 @@
 		<ul class="navbar-nav mx-auto">
 			<li class="nav-item  text-center"><a class="nav-link"
 				href="/tickets">All Tickets</a></li>
-			<li class="nav-item active text-center"><a class="nav-link"
-				href="/ticket/new">New Ticket</a></li>
+			<li class="nav-item  text-center"><a class="nav-link"
+				href="/ticket/new">+ New Ticket</a></li>
 			<li class="nav-item text-center"><a class="nav-link" href="#">Statistics</a></li>
 
 		</ul>
@@ -88,7 +87,8 @@
 			<br> <br>
 			<div class="mx-auto col-md-8">
 
-				<table id="actiosHistoryTable" class="mx-auto col-md-12" cellpadding="5">
+				<table id="actiosHistoryTable" class="mx-auto col-md-12"
+					cellpadding="5">
 					<tr>
 						<td>Created</td>
 						<td>by <b> ${ticket.owner.firstname }
@@ -110,12 +110,21 @@
 								
 					${action.type} by ${action.user.firstname} ${action.user.lastname} at ${formattedActiondAt}
 					<br>
-							</c:forEach>
-							<c:if test="${fn:length(ticket.actionList) gt 5 }">
-							<a href="#">Display more .. </a>
-							</c:if>
-							
-							</td>
+							</c:forEach> <c:if test="${fn:length(ticket.actionList) gt 5 }">
+								<a href="#lessMore" id="displayMoreActions">Display <span id="lessMore" >more</span> .. </a>
+								<br>
+								<span id="hiddenMoreActions"> <c:forEach
+										items="${ticket.actionList}" var="action" begin="5">
+
+										<fmt:formatDate value="${action.doneAt }"
+											var="formattedActiondAt" type="date"
+											pattern="hh:mm:ss dd/MM/yyyy" />
+								
+					${action.type} by ${action.user.firstname} ${action.user.lastname} at ${formattedActiondAt}
+					<br>
+									</c:forEach>
+								</span>
+							</c:if></td>
 
 
 					</tr>
@@ -184,6 +193,7 @@
 		</div>
 	</div>
 	<!-- Latest compiled and minified JavaScript -->
+
 	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
 		integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
 		crossorigin="anonymous"></script>
@@ -196,6 +206,22 @@
 		integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
 		crossorigin="anonymous"></script>
 
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		jQuery(document).ready(function() {
+			$("#hiddenMoreActions").hide();
+			
+			$( "#displayMoreActions" ).on( "click", function() {
+				$("#hiddenMoreActions").toggle();
+				$("#lessMore").text(function () {
+		            return $("#lessMore").text() == 'more' ? 'less' : 'more';
+		        });
+				
+				});
+			
+		});
+	</script>
 
 </body>
 </html>
