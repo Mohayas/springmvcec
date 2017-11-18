@@ -48,7 +48,7 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "/doSignin", method = RequestMethod.POST)
-	public void diSignin(@RequestParam String username, @RequestParam String password, HttpServletRequest request,
+	public void doSignin(@RequestParam String username, @RequestParam String password, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		HttpSession session = request.getSession(true);
@@ -72,6 +72,13 @@ public class MainController {
 			e.printStackTrace();
 		}
 
+	}
+
+	@RequestMapping(value = "/doSignout")
+	public String doSignout(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.invalidate();
+		return "signin";
 	}
 
 	@RequestMapping(value = "/tickets")
@@ -178,7 +185,7 @@ public class MainController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/ticket/resolved/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/ticket/resolve/{id}", method = RequestMethod.GET)
 	public void setResolvedTicket(@PathVariable int id, HttpServletResponse response) {
 
 		Ticket ticket = ticketService.findTicketById(id);
@@ -207,6 +214,34 @@ public class MainController {
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	public String handleResourceNotFoundException() {
 		return "ticket/notfound";
+	}
+
+	@RequestMapping(value = "/ticket/reopen/{id}", method = RequestMethod.GET)
+	public void reOpenTicket(@PathVariable int id, HttpServletResponse response) {
+
+		Ticket ticket = ticketService.findTicketById(id);
+		if (ticket.isClosed()) {
+
+			ticket.setStatus("Opened");
+			ticket.setClosed(false);
+			ticket.setResolved(false);
+			ticketService.saveOrUpadteTicket(ticket);
+
+			Action action = new Action();
+			action.setTicket(ticket);
+			action.setUser(ticket.getOwner());
+			action.setDoneAt(new Date());
+			action.setType("Re-opened");
+			actionService.saveAction(action);
+
+		}
+
+		try {
+			response.sendRedirect("/tickets");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

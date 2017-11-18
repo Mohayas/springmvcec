@@ -18,49 +18,40 @@
 
 <body>
 
-	<nav
-		class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-	<div class="collapse navbar-collapse mx-auto col-md-10" id="navbarCollapse">
-			<ul class="navbar-nav mx-auto" style="margin-left: 0px !important;">
-				<li class="nav-item  text-center"><a class="nav-link"
-					href="/tickets">All Tickets</a></li>
-				<li class="nav-item  text-center"><a class="nav-link"
-					href="/ticket/new">+ New Ticket</a></li>
-				<li class="nav-item text-center"><a class="nav-link" href="#">Statistics</a></li>
-			</ul>
-			
-			 <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      ${user.firstname}&nbsp;${user.lastname}
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Edit</a>
-                        <a class="dropdown-item" href="/doSignout">Sign out</a>
-                    </div>
-                </li>
-                
-            </ul>
+	<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+	<div class="collapse navbar-collapse" id="navbarCollapse">
 
+		<ul class="navbar-nav mx-auto">
+			<li class="nav-item active text-center"><a class="nav-link"
+				href="/tickets">All Tickets</a></li>
+			<li class="nav-item text-center"><a class="nav-link"
+				href="/ticket/new">New Ticket</a></li>
+			<li class="nav-item text-center"><a class="nav-link" href="#">Statistics</a></li>
+
+		</ul>
+		<form class="form-inline mt-2 mt-md-0">
+			<input class="form-control mr-sm-2" type="text" placeholder="Search">
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		</form>
 	</div>
 	</nav>
-	
 
 	<div class="container">
-		<div class="jumbotron"
-		style="disply: flex; align-content: center; justify-items: center; align-items: center;">			
-			<div class="mx-auto col-md-8">
+		<div class="jumbotron">
+
+			<br>
+
 			<form class="form-horizontal" action="/ticket/add" method="post">
 				<fieldset>
 
-					<legend><h1>New Ticket</h1></legend>
-					<hr class="my-4">
-					
+					<legend>New Ticket</legend>
+
+					<!-- Text input http://getbootstrap.com/css/#forms -->
 					<div class="form-group">
 						<label for="textinput" class="control-label col-sm-2">Subject</label>
 						<div class="col-sm-10">
 							<input class="form-control" id="textinput" name="subject"
-								placeholder="Subject" type="text">
+								placeholder="placeholder" type="text">
 
 						</div>
 					</div>
@@ -75,7 +66,7 @@
 
 
 					<div class="form-group">
-						<label for="fileinput" class="control-label col-sm-2">Attachments</label>
+						<label for="fileinput" class="control-label col-sm-2">Screenshot</label>
 						<div class="col-sm-10">
 							<input id="fileinput" name="fileinput" disabled="" type="file">
 							<input type="hidden" name="userId" value="1">
@@ -87,7 +78,7 @@
 						<label class="control-label col-sm-2" for="singlebutton">
 						</label>
 						<div class="text-center col-sm-10">
-							<button type="submit" id="submitticketbutton" name="submitticketbutton"
+							<button type="submit" id="singlebutton" name="singlebutton"
 								class="btn btn-primary" aria-label="Single Button">Submit
 								ticket</button>
 
@@ -99,7 +90,7 @@
 			</form>
 
 
-			</div>
+
 		</div>
 	</div>
 

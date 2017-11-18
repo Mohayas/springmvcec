@@ -19,38 +19,49 @@
 
 <body>
 
-	<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-	<div class="collapse navbar-collapse" id="navbarCollapse">
-		
-		<ul class="navbar-nav mx-auto">
-			<li class="nav-item active text-center">
-			<a class="nav-link" href="/tickets">All Tickets</a>
-			</li>
-			<li class="nav-item text-center">
-			<a class="nav-link" href="/ticket/new">New Ticket</a></li>
-			<li class="nav-item text-center"><a class="nav-link" href="#">Statistics</a></li>
+	<nav
+		class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+	<div class="collapse navbar-collapse mx-auto col-md-10" id="navbarCollapse">
+			<ul class="navbar-nav mx-auto" style="margin-left: 0px !important;">
+				<li class="nav-item  text-center"><a class="nav-link"
+					href="/tickets">All Tickets</a></li>
+				<li class="nav-item  text-center"><a class="nav-link"
+					href="/ticket/new">+ New Ticket</a></li>
+				<li class="nav-item text-center"><a class="nav-link" href="#">Statistics</a></li>
+			</ul>
 			
-		</ul>
-		<form class="form-inline mt-2 mt-md-0">
-			<input class="form-control mr-sm-2" type="text" placeholder="Search">
-			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-		</form>
+			 <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      ${user.firstname}&nbsp;${user.lastname}
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Edit</a>
+                        <a class="dropdown-item" href="/doSignout">Sign out</a>
+                    </div>
+                </li>
+                
+            </ul>
+
 	</div>
 	</nav>
+
 
 	<div class="container">
 		<div class="jumbotron">
 			<h1>All Tickets</h1>
-			<hr class="my-4">			
+			<hr class="my-4">
 			<table id="ticketsTable"
-				class="table table-bordered table-hover table-dark table-striped" style="border: 1px solid #babdb6;">
+				class="table table-bordered table-hover table-dark table-striped"
+				style="border: 1px solid #babdb6;">
 				<thead class="thead-dark">
-					<tr style="background-color: #f7f7f9; border: 1px solid #babdb6; " >
-						<th scope="col" style="border: 1px solid #babdb6; " >Id</th>
-						<th scope="col" style="border: 1px solid #babdb6; " >Created By</th>
-						<th scope="col" style="border: 1px solid #babdb6; " >Subject</th>
-						<th scope="col" style="border: 1px solid #babdb6; " >Created At</th>
-						<th scope="col" style="border: 1px solid #babdb6; " >Status</th>
+					<tr style="background-color: #f7f7f9; border: 1px solid #babdb6;">
+						<th scope="col" style="border: 1px solid #babdb6;">Id</th>
+						<th scope="col" style="border: 1px solid #babdb6;">Created By</th>
+						<th scope="col" style="border: 1px solid #babdb6;">Subject</th>
+						<th scope="col" style="border: 1px solid #babdb6;">Created At</th>
+						<th scope="col" style="border: 1px solid #babdb6;">Status</th>
+						<th scope="col" style="border: 1px solid #babdb6;">Actions</th>
 
 					</tr>
 				</thead>
@@ -61,11 +72,35 @@
 
 							<td style="border: 1px solid #babdb6;">#${ticket.id }</td>
 							<td style="border: 1px solid #babdb6;">${ticket.owner.firstname }&nbsp;${ticket.owner.lastname }</td>
-							<td style="border: 1px solid #babdb6;"><a href="/ticket/${ ticket.id }">${ticket.subject }</a></td>
-							<td style="border: 1px solid #babdb6;"><fmt:formatDate value="${ticket.createdAt }"
-									var="formattedCreatedAt" type="date" pattern="hh:mm:ss dd/MM/yyyy" />
+							<td style="border: 1px solid #babdb6;"><a
+								href="/ticket/${ ticket.id }">${ticket.subject }</a></td>
+							<td style="border: 1px solid #babdb6;"><fmt:formatDate
+									value="${ticket.createdAt }" var="formattedCreatedAt"
+									type="date" pattern="hh:mm:ss dd/MM/yyyy" />
 								${formattedCreatedAt}</td>
 							<td style="border: 1px solid #babdb6;">${ticket.status }</td>
+							<td style="border: 1px solid #babdb6;"><c:choose>
+									<c:when test="${ticket.resolved == true }">
+										<a class="btn btn-success col-sm-4 disabled"
+											aria-disabled="true" href="/ticket/resolve/${ticket.id}"
+											role="button">Resolved</a>
+									</c:when>
+									<c:otherwise>
+										<a class="btn btn-success col-sm-4"
+											href="/ticket/resolve/${ticket.id}" role="button">Resolve</a>
+									</c:otherwise>
+								</c:choose> <c:choose>
+									<c:when test="${ticket.closed == true }">
+										<a class="btn btn-danger col-sm-4"
+											 href="/ticket/reopen/${ticket.id}"
+											role="button">Re-open</a>
+
+									</c:when>
+									<c:otherwise>
+										<a class="btn btn-danger col-sm-4"
+											href="/ticket/close/${ticket.id}" role="button"> Close </a>
+									</c:otherwise>
+								</c:choose></td>
 
 						</tr>
 

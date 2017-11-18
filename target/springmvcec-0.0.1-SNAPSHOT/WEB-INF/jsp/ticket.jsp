@@ -27,32 +27,24 @@
 
 	<nav
 		class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
-	<div class="collapse navbar-collapse mx-auto col-md-10" id="navbarCollapse">
-			<ul class="navbar-nav mx-auto" style="margin-left: 0px !important;">
-				<li class="nav-item  text-center"><a class="nav-link"
-					href="/tickets">All Tickets</a></li>
-				<li class="nav-item  text-center"><a class="nav-link"
-					href="/ticket/new">+ New Ticket</a></li>
-				<li class="nav-item text-center"><a class="nav-link" href="#">Statistics</a></li>
-			</ul>
-			
-			 <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      ${user.firstname}&nbsp;${user.lastname}
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Edit</a>
-                        <a class="dropdown-item" href="/doSignout">Sign out</a>
-                    </div>
-                </li>
-                
-            </ul>
+	<div class="collapse navbar-collapse" id="navbarCollapse">
 
+		<ul class="navbar-nav mx-auto">
+			<li class="nav-item  text-center"><a class="nav-link"
+				href="/tickets">All Tickets</a></li>
+			<li class="nav-item  text-center"><a class="nav-link"
+				href="/ticket/new">+ New Ticket</a></li>
+			<li class="nav-item text-center"><a class="nav-link" href="#">Statistics</a></li>
+
+		</ul>
+		<form class="form-inline mt-2 mt-md-0">
+			<input class="form-control mr-sm-2" type="text" placeholder="Search">
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		</form>
 	</div>
 	</nav>
-	
-		<div class="container">
+
+	<div class="container">
 		<div class="jumbotron"
 			style="disply: flex; align-content: center; justify-items: center; align-items: center;">
 
@@ -68,18 +60,18 @@
 					<c:choose>
 						<c:when test="${ticket.resolved == true }">
 							<a class="btn btn-success disabled" aria-disabled="true"
-								href="/ticket/resolve/${ticket.id}" role="button">Resolved</a>
+								href="/ticket/resolved/${ticket.id}" role="button">Resolved</a>
 						</c:when>
 						<c:otherwise>
-							<a class="btn btn-success" href="/ticket/resolve/${ticket.id}"
+							<a class="btn btn-success" href="/ticket/resolved/${ticket.id}"
 								role="button">Resolve</a>
 						</c:otherwise>
 					</c:choose>
 
 					<c:choose>
 						<c:when test="${ticket.closed == true }">
-							<a class="btn btn-danger "
-								href="/ticket/open/${ticket.id}" role="button">Re-open</a>
+							<a class="btn btn-danger disabled" aria-disabled="true"
+								href="/ticket/close/${ticket.id}" role="button">Closed</a>
 
 						</c:when>
 						<c:otherwise>
@@ -119,9 +111,7 @@
 					${action.type} by ${action.user.firstname} ${action.user.lastname} at ${formattedActiondAt}
 					<br>
 							</c:forEach> <c:if test="${fn:length(ticket.actionList) gt 5 }">
-								<a href="#lessMore" id="displayMoreActions">Display <span
-									id="lessMore">more</span> ..
-								</a>
+								<a href="#lessMore" id="displayMoreActions">Display <span id="lessMore" >more</span> .. </a>
 								<br>
 								<span id="hiddenMoreActions"> <c:forEach
 										items="${ticket.actionList}" var="action" begin="5">
@@ -150,7 +140,7 @@
 							style="float: right;"> ${formattedCreatedAt} </span>
 					</div>
 					<div class="card-block">
-
+						<!-- 						<h4 class="card-title">Special title treatment</h4> -->
 						<p class="card-text">${ ticket.body }</p>
 					</div>
 				</div>
@@ -168,6 +158,7 @@
 							</span>
 						</div>
 						<div class="card-block">
+							<!-- 						<h4 class="card-title">Special title treatment</h4> -->
 							<p class="card-text">${message.body }</p>
 						</div>
 					</div>
@@ -220,15 +211,15 @@
 	<script>
 		jQuery(document).ready(function() {
 			$("#hiddenMoreActions").hide();
-
-			$("#displayMoreActions").on("click", function() {
+			
+			$( "#displayMoreActions" ).on( "click", function() {
 				$("#hiddenMoreActions").toggle();
-				$("#lessMore").text(function() {
-					return $("#lessMore").text() == 'more' ? 'less' : 'more';
+				$("#lessMore").text(function () {
+		            return $("#lessMore").text() == 'more' ? 'less' : 'more';
+		        });
+				
 				});
-
-			});
-
+			
 		});
 	</script>
 
